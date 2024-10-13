@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(90deg, rgba(93,142,251,1) 0%, rgba(93,142,251,1) 50%, rgba(0,212,255,1) 100%);
+    background: linear-gradient(90deg, blue 0%, darkblue 50%, black 100%);
     height: 100%;
     padding: 0;
     margin: 0;
@@ -38,7 +38,7 @@ p {
 }
 
 .result {
-    color: #007bff;
+    color: blue;
     margin-bottom: 20px;
 }
 
@@ -50,7 +50,7 @@ p {
 
 .streak {
     font-size: 1em;
-    color: #28a745;
+    color: green ;
     margin-bottom: 20px;
 }
 
@@ -81,7 +81,7 @@ input[type="text"] {
 }
 
 button {
-    background-color: #007bff;
+    background-color: green;
     color: #fff;
     border: none;
     padding: 10px 20px;

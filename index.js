@@ -7,8 +7,6 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true })); // For parsing form data
 app.use(express.static("public")); // To serve static files (e.g., CSS)
 
-//Some routes required for full functionality are missing here. Only get routes should be required
-
 let leaderboard = [];
 
 app.get("/", (req, res) => {
@@ -21,7 +19,6 @@ app.get("/quiz", (req, res) => {
   res.render("quiz", { question, result: null, streak });
 });
 
-//Handles quiz submissions.
 app.post("/quiz", (req, res) => {
   const { answer, question, streak } = req.body;
   const isCorrect = isCorrectAnswer(question, answer);
@@ -36,6 +33,12 @@ app.post("/quiz", (req, res) => {
       streak: newStreak,
     });
   } else {
+    if (newStreak > 0) {
+      const date = new Date().toLocaleString();
+      leaderboard.push({ score: newStreak, date });
+      leaderboard.sort((a, b) => b.score - a.score); // Sort leaderboard in descending order
+      leaderboard = leaderboard.slice(0, 10); // Keep only top 10 scores
+    }
     newStreak = 0; // Reset streak on incorrect answer
     res.render("quiz", {
       question: newQuestion,
@@ -43,12 +46,12 @@ app.post("/quiz", (req, res) => {
       streak: newStreak,
     });
   }
-  //answer will contain the value the user entered on the quiz page
-  //Logic must be added here to check if the answer is correct, then track the streak and redirect properly
-  //By default we'll just redirect to the homepage again.
 });
 
-// Start the server
+app.get("/leaderboard", (req, res) => {
+  res.render("leaderboard", { leaderboard });
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
